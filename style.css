@@ -1,0 +1,110 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+:root{
+  --primay-color: #e0643e;
+}
+
+body{
+  display: flex;
+  width: 90vw;
+  padding: 1.5rem ;
+  margin: auto;
+  background-color: #dbd4d4;
+}
+
+h1{
+  font-size: 2.5rem;
+  font-weight: bold;
+  padding-bottom: 1.5rem;
+}
+
+.cardContainer{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.wrapper{
+  display: flex;
+  flex-shrink: 1;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card{
+  width: 16rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.card img{
+  width: 100%;
+  border-radius: 10px;
+}
+
+.buttonCard{
+  border-radius: 30px;
+  padding: .5rem 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  gap: 1rem;
+  outline: none;
+  border: 1px solid gray;
+  background-color: #FFF;
+  display: flex;
+  margin: auto;
+  align-items: center; 
+  cursor: pointer;
+}
+
+.content{
+  padding: 2.5rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.content .food{
+  color: gray;
+}
+
+.content .typeFood{
+  font-weight: bold;
+}
+
+.content .price{
+  color: var(--primay-color);
+}
+
+.payment{
+  background-color: #FFF;
+  padding: 1rem 2rem;
+  margin-left: 1rem;
+  width: 30rem;
+  height: fit-content;
+  display: block;
+  border-radius: 10px;
+}
+
+.payTitle{
+  color: var(--primay-color);
+}
+
+.payCart{
+  color: #AD8A85;
+  font-weight: bold;
+}
+
+.emptyCart{
+  text-align: center;
+}
+
+.emptyCart svg{
+  width: 100%;
+  text-align: center;
+}
+
