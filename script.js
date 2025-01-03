@@ -1,7 +1,11 @@
-const btnCard = document.getElementsByClassName('button')
+let data = document.getElementById("data")
 
-function Order(){
-  alert()
-  document.style.backgroundColor = "#C83C0E";
-  
-}
+fetch("data.json").then((response) => {
+  response.json().then((data) =>{
+    console.log(data);
+  })
+})
+
+
+const btnCard = document.getElementsByClassName('button');
+const imgCard = document.getElementsByClassName('imgCard');
