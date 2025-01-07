@@ -1,46 +1,57 @@
-const btnCard = document.querySelectorAll('button');
-const imgCard = document.getElementsByClassName('imgCard');
-const payTitle = document.querySelector("h3.payTitle")
-const emptyCart = document.querySelector(".emptyCart")
+(async function(){
+  const btnCard = document.querySelectorAll('button');
+  const emptyCart = document.querySelector(".emptyCart")
+  let products = [];
 
-// access data.json
-let data = document.getElementById("data")
-fetch("data.json").then((response) => { response.json().then((data) =>{
-  for(let i = 0; i < data.length; i++){
-    // console.log(data[i].name);
+  async function loadProduct(){
+    const URL = 'http://127.0.0.1:5500/data/data.json'
+
+    try {
+      const response = await fetch(URL);
+      if (!response.ok) {
+        throw new Error(`Erro: ${response.statusText}`);
+      }
+      products = await response.json();
+    } catch (error) {
+      emptyCart.textContent = `Error loading data: ${error.message}`;
+    }
+  }
+
+  await loadProduct();
+
+  btnCard.forEach(button => {
+    button.addEventListener('click', () => {
+    const countText = document.querySelector('.count')
+    const buttontId = button.getAttribute('data-id');
+    const cardTitle = document.querySelector('.payTitle')
+    let counter = {};
     
-  }
-  
-})
-})
-
-// function to add order to list 
-function addOrder(){
-  let countText = document.getElementById('count')
-  let count = 0;
-
-  for (let i = 0; i < btnCard.length; i++) {
-
-    const li = document.createElement('li');
-
-    btnCard[i].addEventListener('click', function (){
-      count++;
-      countText.innerHTML = count;
+    
+      cardTitle.innerHTML = `Your Cart (${counter})`
+      countText.innerHTML = counter++;
+    
+    const selectedProduct = products.find(product => product.id == buttontId)  
+    
+    if(selectedProduct){
+      let listItem = document.createElement('li')
+      let sumOrder = (selectedProduct.price * counter).toFixed(2);
+      listItem.innerHTML = `
+        <p>${selectedProduct.name}</p>
+        <span>${counter}x</span> ${selectedProduct.price.toFixed(2)} ${sumOrder}  
+      `
       emptyCart.innerHTML = ''
-      
-    })
-  }
-}addOrder()
+      emptyCart.appendChild(listItem)
+    }else{
+      let listItem = document.createElement('li')
+      let sumOrder = (selectedProduct.price * counter).toFixed(2);
+      listItem.innerHTML += `
+        <p>${selectedProduct.name}</p>
+        <span>${counter}x</span> ${selectedProduct.price.toFixed(2)} ${sumOrder}  
+      `
+      emptyCart.innerHTML = ''
 
-
-// set up event on all buttons
-function setupButton(){
-  btnCard.forEach((button) => {
-    button.addEventListener('click', function(){
-      console.log('button clicked', this);
-      console.log('index', Array.from(btnCard).indexOf(this));
-      
-      
+      emptyCart.appendChild(listItem)
+    }
     })
   })
-}setupButton()
+})()
