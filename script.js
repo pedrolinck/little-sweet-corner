@@ -4,15 +4,17 @@
   const btnCard = document.querySelectorAll('.buttonCard');
   const emptyCart = document.querySelector(".emptyCart")
   const cardTitle = document.querySelector('.payTitle')
-  const svgImg = document.querySelector('.emptyCart svg')
+  const emptySvg = document.querySelector('.emptyCart svg')
   const emptyTitle = document.querySelector('.emptyTitle')
   let products = [];
   // object to store product counters
-  const counter = {};
+  let counter = {};
   // object to store all purchased items 
   const carItems = {}
   // store sum of order
   let totalOrder = 0;
+
+  // let totalPrice = 0;
 
   // div to show total and confirm button dinamically
   const totalDiv = document.createElement('div')
@@ -27,7 +29,7 @@
 
   // select elements inside dynamic div
   const orderText = document.querySelector('.orderText .amount')
-  const confirmBtn = totalDiv.querySelector('.confirmPurchase')
+  const confirmBtn = totalDiv.querySelector('.confirmBtn')
 
   // load products from json
   async function loadProduct(){
@@ -67,7 +69,7 @@
       const selectedProduct = products.find(product => product.id == buttontId)  
 
       if(totalItems === 1){
-        if(svgImg) svgImg.remove()
+        if(emptySvg) emptySvg.remove()
         if(emptyTitle) emptyTitle.remove()
       }
       
@@ -110,20 +112,22 @@
         totalDiv.style.display = "block";
       }
 
+      let totalPrice = 0
       // confirm purchase
       confirmBtn.addEventListener("click", () => {
-        alert(`Order confirmed! Total: $${totalPrice.toFixed(2)}`);
+        // alert(`Order confirmed! Total: $${totalPrice.toFixed(2)}`);
         
-        emptyCart.innerHTML = "<p>Carrinho vazio</p>";
+        
         counter = {};
         totalPrice = 0;
         totalDiv.style.display = "none";
-        cardTitle.innerHTML = "Your Cart (0 items)";
-    
-        if (cartImage) emptyCart.innerHTML += `<img src="your-image-path" class="cart-image">`;
-        if (cartPlaceholder) emptyCart.innerHTML += `<p class="cart-placeholder">Your added items will appear here</p>`;
+        cardTitle.innerHTML = "Your Cart (0)";
+        totalDiv.style.display = "none";
+
+        if (emptySvg) emptyCart.innerHTML += `<img src="./assets/images/illustration-empty-cart.svg">`;
+        if (emptyTitle) emptyCart.innerHTML += `<p>Your added items will appear here</p>`;
+       
       });
-     
     })
   })
 })()
