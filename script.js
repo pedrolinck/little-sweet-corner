@@ -6,15 +6,12 @@
   const cardTitle = document.querySelector('.payTitle')
   const emptySvg = document.querySelector('.emptyCart svg')
   const emptyTitle = document.querySelector('.emptyTitle')
+  const cancelItem = document.querySelector('.cancelItem')
   let products = [];
   // object to store product counters
   let counter = {};
   // object to store all purchased items 
   const carItems = {}
-  // store sum of order
-  let totalOrder = 0;
-
-  // let totalPrice = 0;
 
   // div to show total and confirm button dinamically
   const totalDiv = document.createElement('div')
@@ -22,14 +19,14 @@
   totalDiv.style.display = "none";
   totalDiv.innerHTML = `
     <p class='orderText'>Total order<span class='amount'>$46.00</span></p>
-    <button class='confirmBtn'>Confirm order</button>
+    <button type="submit" class='submit'>Confirm order</button>
   `
   // add after list items
   emptyCart.parentElement.appendChild(totalDiv)
 
   // select elements inside dynamic div
   const orderText = document.querySelector('.orderText .amount')
-  const confirmBtn = totalDiv.querySelector('.confirmBtn')
+  const submit = totalDiv.querySelector('.submit')
 
   // load products from json
   async function loadProduct(){
@@ -47,19 +44,19 @@
   }
 
   await loadProduct();
-
+  let listItem;
   // add event click on each button
   btnCard.forEach(button => {
     button.addEventListener('click', () => {
       const buttontId = button.getAttribute('data-id');
-
+      const cancelItem = document.querySelector('.cancelItem');
 
       if(!counter[buttontId]){
         // initialize product's counter
         counter[buttontId] = 0
       }
-
       counter[buttontId]++;
+
 
       // updates the shopping cart
       const totalItems = Object.values(counter).reduce((sum, count) => sum + count, 0)
@@ -76,7 +73,7 @@
       if(selectedProduct){
         let listItem;
         if(!carItems[buttontId]){
-          // if item still isn't on shopping cart, then create a new element
+          // if item still isn't in shopping cart, then create a new element
           listItem = document.createElement('li')
           listItem.className = 'list-item'
           listItem.setAttribute('data-id', buttontId)
@@ -102,32 +99,35 @@
           </span>
           
         `
-        // update total
-        totalOrder = Object.entries(counter).reduce((total, [id, count]) =>{
+          // update total
+          totalOrder = Object.entries(counter).reduce((total, [id, count]) =>{
           const product = products.find((p) => p.id == id)
-          return total + product.price * count
+          // orderText.textContent = `$${totalOrder.toFixed()}`;
+          return total + (product.price * count)
         })
-
-        // orderText.innerHTML = `Total order $${totalOrder.toFixed(2)}`;
-        totalDiv.style.display = "block";
+          
+          totalDiv.style.display = "block";
       }
 
       let totalPrice = 0
       // confirm purchase
-      confirmBtn.addEventListener("click", () => {
-        // alert(`Order confirmed! Total: $${totalPrice.toFixed(2)}`);
-        
-        
+      submit.addEventListener("click", () => {
         counter = {};
         totalPrice = 0;
         totalDiv.style.display = "none";
         cardTitle.innerHTML = "Your Cart (0)";
-        totalDiv.style.display = "none";
 
-        if (emptySvg) emptyCart.innerHTML += `<img src="./assets/images/illustration-empty-cart.svg">`;
-        if (emptyTitle) emptyCart.innerHTML += `<p>Your added items will appear here</p>`;
-       
+    
+        if(submit){
+          emptyCart.innerHTML = `
+            <img src="./assets/images/illustration-empty-cart.svg">
+            <p>Your added items will appear here</p>
+          `;
+        }
+        
       });
     })
+
+    
   })
 })()
