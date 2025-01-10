@@ -151,7 +151,7 @@ h1{
   margin-left: auto;
 }
 
-.confirmBtn{
+.submit{
   display: block;
   width: 100%;
   border-radius: 15px;
@@ -163,6 +163,6 @@ h1{
   cursor: pointer;
 }
 
-.confirmBtn:hover{
+.submit:hover{
   background-color: #c45938;
 }
