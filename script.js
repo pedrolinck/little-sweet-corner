@@ -32,26 +32,22 @@
     setupEventListeners() {
       const buttons = document.querySelectorAll(".buttonCard");
       buttons.forEach((button) => {
-        button.addEventListener("click", (event) =>
-        this.handleAddToCart(event)
-      );
-    });
+        button.addEventListener("click", (event) => {
+          this.handleAddToCart(event);
+        });
+      });
     }
 
     handleAddToCart(event) {
       const button = event.target;
       const productId = button.getAttribute("data-id");
-      const imgId = button.getAttribute("data-target");
     
       if (!this.counter[productId]) {
         this.counter[productId] = 0;
       }
       this.counter[productId]++;
 
-      const totalItems = Object.values(this.counter).reduce(
-        (sum, count) => sum + count,
-        0
-      );
+      const totalItems = Object.values(this.counter).reduce((sum, count) => sum + count,0);
       document.querySelector(".payTitle").innerHTML = `Your Cart (${totalItems})`;
 
       const selectedProduct = this.products.find((product) => product.id == productId);
@@ -62,7 +58,7 @@
       if (selectedProduct) {
         this.updateCartItem(selectedProduct, productId);
         this.updateTotal();
-      }
+      }     
     }
 
     createTotalDiv() {
@@ -73,25 +69,16 @@
       return totalDiv;
     }
 
-    clearEmptyCartMessage() {
-      const emptySvg = document.querySelector(".emptyCart svg");
-      const emptyTitle = document.querySelector(".emptyTitle");
-
-      if (emptySvg) emptySvg.remove();
-      if (emptyTitle) emptyTitle.remove();
-    }
-
     updateCartItem(product, productId) {
       let listItem = this.cartItems[productId];
 
       if (!listItem) {
         listItem = document.createElement("li");
         listItem.className = "list-item";
-        listItem.setAttribute("data-id", productId);
-
+        listItem.setAttribute("data-id", productId);  
         this.cartItems[productId] = listItem;
         document.querySelector(".emptyCart").appendChild(listItem);
-      }
+      } 
 
       const quantity = this.counter[productId];
       const totalPrice = (product.price * quantity).toFixed(2);
@@ -107,8 +94,9 @@
             <button class='cancelItem' data-id='${productId}'>x</button>
         </span>
       `;
-
-      listItem.querySelector(".cancelItem").addEventListener("click", () => this.removeCartItem(productId));
+      listItem.querySelector(".cancelItem").addEventListener("click", () => {
+        this.removeCartItem(productId)
+      });
     }
 
     updateTotal() {
@@ -132,12 +120,12 @@
       this.cartItems[productId].remove();
       delete this.cartItems[productId];
 
-      const totalItems = Object.values(this.counter).reduce(
-        (sum, count) => sum + count, 0);
+      const totalItems = Object.values(this.counter).reduce((sum, count) => sum + count, 0);
       document.querySelector(".payTitle").innerHTML = `Your Cart (${totalItems})`;
 
       if (totalItems === 0) {
         this.showEmptyCartMessage();
+        this.totalDiv.style.display = "none";
       } else {
         this.updateTotal();
       }
@@ -151,15 +139,27 @@
       document.querySelector(".payTitle").innerHTML = "Your Cart (0)";
       this.showEmptyCartMessage();
 
-      setTimeout(() => {window.location.reload()}, 500);
+      // setTimeout(() => {window.location.reload()}, 500);
+    }
+
+    clearEmptyCartMessage() {
+      const emptySvg = document.querySelector(".emptyCart svg");
+      const emptyTitle = document.querySelector(".emptyTitle");
+      const card = document.querySelector(".emptyCart");
+
+      if (emptySvg) emptySvg.remove();
+      if (emptyTitle) emptyTitle.remove();
+
+      card.innerHTML = ''
+
     }
 
     showEmptyCartMessage() {
       document.querySelector(".emptyCart").innerHTML = `
-      <img style="display:flex; margin: auto" class="center" src="./assets/images/illustration-empty-cart.svg">
+      <img style="display:flex; margin: auto" src="./assets/images/illustration-empty-cart.svg">
       <p>Your added items will appear here</p>
       `;
     }
   }
-  new ShoppingCart();
+  new ShoppingCart();  
 })();
