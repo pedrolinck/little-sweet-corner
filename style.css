@@ -9,11 +9,18 @@
 }
 
 body{
+  background-color: #e8e8e8;
+}
+
+main{
+  background-color: hsl(13, 31%, 94%);
+  box-shadow:  3px 20px  30px 5px rgba(0, 0, 0, .2);
+  border-radius: 10px;
   display: flex;
-  width: 90vw;
-  padding: 1.5rem ;
-  margin: auto;
-  background-color: #dbd4d4;
+  gap: 1rem;
+  margin: 6rem auto;
+  padding: 4rem;
+  width: fit-content;
 }
 
 h1{
@@ -23,28 +30,44 @@ h1{
 }
 
 .cardContainer{
-  display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  width: 100%;
 }
 
-.wrapper{
+.flexCard{
   display: flex;
-  flex-shrink: 1;
+  max-width: 50rem;
   flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .card{
   width: 16rem;
-  display: flex;
   flex-direction: column;
+  border-radius: 10px;
+  margin-bottom: 4rem;
+  padding: .5rem;
+}
+
+.card:hover{
+  background-color: rgba(181, 180, 180, .2);
+  box-shadow:  3px 0px  20px 5px rgba(0, 0, 0, .2);
+  filter: brightness(.8);
+}
+
+.card:hover .imgCard{
+  transform: scale(1.06);
+}
+
+.wrapper{
+  position: relative;
+  width: 100%;
 }
 
 .card img{
+  display: block;
   width: 100%;
   border-radius: 10px;
+  transition: transform .3s ease-in-out, filter .3s ease;
+  
 }
 
 .buttonCard{
@@ -60,12 +83,16 @@ h1{
   margin: auto;
   align-items: center; 
   cursor: pointer;
+  position: absolute;
+  top: 90%;
+  left: 40.945px;
 }
 
 .content{
-  padding: 2.5rem 0;
   display: flex;
   flex-direction: column;
+  padding-top: 2rem;
+  gap: .3rem;
 }
 
 .content .food{
@@ -83,11 +110,12 @@ h1{
 .payment{
   background-color: #FFF;
   padding: 1rem 2rem;
-  margin-left: 1rem;
-  width: 30rem;
+  width: 20rem;
   height: fit-content;
   display: block;
   border-radius: 10px;
+  position: sticky;
+  top: 0;
 }
 
 .payTitle{
@@ -165,4 +193,55 @@ h1{
 
 .submit:hover{
   background-color: #c45938;
+}
+
+/* mobile device */
+
+@media(30rem > width < 48rem /*480px*/){
+  main{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  
+  .cardContainer{
+    width: min-content;
+  }
+
+  .flexCard{
+    width: min-content;
+  }
+
+  .card{
+    width: 100%;
+  }
+  
+  .card img{
+    width: 100%;
+  }
+
+  .buttonCard{
+    font-size: 1.5rem;
+    margin: auto;
+    position: absolute;
+    top: 93%;
+    left: 90.17px;
+
+  }
+
+  .payment{
+    width: 100%;
+  }
+
+  .emptyTitle{
+    font-size: 1.38rem;
+  }
+
+};
+
+/* tablet device */
+
+@media(width < 48rem /*768px*/){
+
+ 
 }
