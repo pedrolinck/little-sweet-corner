@@ -16,10 +16,8 @@ main{
   background-color: hsl(13, 31%, 94%);
   box-shadow:  3px 20px  30px 5px rgba(0, 0, 0, .2);
   border-radius: 10px;
-  display: flex;
   gap: 1rem;
   margin: 6rem auto;
-  padding: 4rem;
   width: fit-content;
 }
 
@@ -197,36 +195,36 @@ h1{
 
 /* mobile device */
 
-@media(30rem > width < 48rem /*480px*/){
-  main{
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-  }
+@media only screen and (max-width: 30rem /*480px*/){
   
-  .cardContainer{
-    width: min-content;
+  main{
+    flex-direction: column;
+    padding: 2rem 1rem;
   }
 
   .flexCard{
-    width: min-content;
+    display: flex;
+    justify-content: center;
+    width: 230px;
+    margin: auto;
   }
 
   .card{
     width: 100%;
   }
-  
-  .card img{
+
+  .imgCard{
     width: 100%;
   }
 
   .buttonCard{
-    font-size: 1.5rem;
-    margin: auto;
     position: absolute;
     top: 93%;
-    left: 90.17px;
+    left: 80px;
+  }
 
+  .content{
+    text-align: center;
   }
 
   .payment{
@@ -241,7 +239,41 @@ h1{
 
 /* tablet device */
 
-@media(width < 48rem /*768px*/){
+@media only screen and (max-width: 48rem /*768px*/){
 
+  .flexCard{
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
  
+}
+
+@media only screen and (max-width: 64rem /*1024px*/){
+  main{
+    display: flex;
+    padding: 2rem 1rem;
+  }
+
+  .flexCard{
+    width: 100%;
+  }
+
+  .card{
+    width: 14.375rem;
+  }
+
+  .buttonCard{
+    font-size: .8rem;
+    position: absolute;
+    top: 90%;
+    left: 33px;
+  }
+}
+
+@media only screen and (max-width: 90rem /*1440px*/){
+  
+  main{
+    display: flex;
+  }
+
 }
