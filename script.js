@@ -52,7 +52,7 @@
 
       const selectedProduct = this.products.find((product) => product.id == productId);
 
-      if (totalItems === 1) {
+      if (totalItems >= 1) {
         this.clearEmptyCartMessage();
       }
       if (selectedProduct) {
@@ -145,13 +145,9 @@
     clearEmptyCartMessage() {
       const emptySvg = document.querySelector(".emptyCart svg");
       const emptyTitle = document.querySelector(".emptyTitle");
-      const card = document.querySelector(".emptyCart");
 
       if (emptySvg) emptySvg.remove();
       if (emptyTitle) emptyTitle.remove();
-
-      card.innerHTML = ''
-
     }
 
     showEmptyCartMessage() {
