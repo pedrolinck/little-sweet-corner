@@ -16,7 +16,7 @@
     }
 
     async loadProducts() {
-      const URL = "https://little-sweet-corner.netlify.app/data.json";
+      const URL = "http://127.0.0.1:5500/data/data.json";
 
       try {
         const response = await fetch(URL);
@@ -52,13 +52,21 @@
 
       const selectedProduct = this.products.find((product) => product.id == productId);
 
-      if (totalItems >= 1) {
+      if (totalItems === 1) {
         this.clearEmptyCartMessage();
       }
       if (selectedProduct) {
         this.updateCartItem(selectedProduct, productId);
         this.updateTotal();
       }     
+    }
+    
+    clearEmptyCartMessage() {
+      const emptySvg = document.querySelector(".emptyCart svg");
+      const emptyTitle = document.querySelector(".emptyTitle");
+
+      if (emptySvg) emptySvg.remove();
+      if (emptyTitle) emptyTitle.remove();
     }
 
     createTotalDiv() {
@@ -139,15 +147,7 @@
       document.querySelector(".payTitle").innerHTML = "Your Cart (0)";
       this.showEmptyCartMessage();
 
-      // setTimeout(() => {window.location.reload()}, 500);
-    }
-
-    clearEmptyCartMessage() {
-      const emptySvg = document.querySelector(".emptyCart svg");
-      const emptyTitle = document.querySelector(".emptyTitle");
-
-      if (emptySvg) emptySvg.remove();
-      if (emptyTitle) emptyTitle.remove();
+      setTimeout(() => {window.location.reload()}, 500);
     }
 
     showEmptyCartMessage() {
