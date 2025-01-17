@@ -16,7 +16,7 @@
     }
 
     async loadProducts() {
-      const URL = "http://little-sweet-corner.netlify.app/data/data.json";
+      const URL = "https://little-sweet-corner.netlify.app/data/data.json";
 
       try {
         const response = await fetch(URL);
