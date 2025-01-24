@@ -16,7 +16,7 @@
     }
 
     async loadProducts() {
-      const URL = "https://little-sweet-corner.netlify.app/data/data.json";
+      const URL = "http://127.0.0.1:5500/data/data.json";
 
       try {
         const response = await fetch(URL);
@@ -118,7 +118,6 @@
         <button type="submit" class='submit'>Confirm order</button>
       `;
       this.totalDiv.style.display = "block";
-
       const submitButton = this.totalDiv.querySelector(".submit");
       submitButton.addEventListener("click", () => this.confirmOrder());
     }
@@ -140,6 +139,7 @@
     }
 
     confirmOrder() {
+      this.createPopUp();
       this.counter = {};
       Object.values(this.cartItems).forEach((item) => item.remove());
       this.cartItems = {};
@@ -147,7 +147,51 @@
       document.querySelector(".payTitle").innerHTML = "Your Cart (0)";
       this.showEmptyCartMessage();
 
-      setTimeout(() => {window.location.reload()}, 500);
+      // setTimeout(() => {window.location.reload()}, 500);
+    }
+    
+    createPopUp() {
+      const popupContainer = document.querySelector(".orderBanner");
+      let orderDetails = [];
+
+      const popupHTML = `
+        <div class="popup-overlay" id="popupOverlay">
+          <div class="popup">
+            <div class="popup-header">
+              <span class="popup-icon">
+                <img src='./assets/images/icon-order-confirmed.svg' />
+              </span>
+              <h1>Order Confirmed</h1>
+              <span class='textContent'>We hope you enjoy your food!</span>
+            </div>
+            <div class="popup-body">
+              ${orderDetails.map((item) =>
+                `
+                  <li class="order-item">
+                    <span>${item.name}</span>
+                    <span>${item.quantity}x @ $${item.price.toFixed(2)}</span>
+                    <span>$${(item.quantity * item.price).toFixed(2)}</span>
+                  </li>
+                `
+              ).join("")}
+              <li class='orderPrice'>
+                <strong>$${orderDetails.reduce((total, item) =>
+                  total + item.quantity * item.price, 0).toFixed(2)}
+                </strong>
+              </li>
+              <div class="order-total">
+                <button class='submit'>Start New Order</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      popupContainer.innerHTML = popupHTML;
+
+      document.getElementById("popupOverlay").addEventListener('click', function (e) {
+        if (e.target === this) popupContainer.innerHTML = ""
+      })
     }
 
     showEmptyCartMessage() {
