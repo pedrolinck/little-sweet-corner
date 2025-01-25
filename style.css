@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 :root{
-  --primay-color: #e0643e;
+  --primay-color: #cc3e13;
 }
 
 body{
@@ -239,8 +239,10 @@ h1{
 }
 
 .popup-body {
+  background-color: hsla(14, 100%, 95%, 0.479);
   margin-top: 20px;
-  text-align: left;
+  padding: 1rem;
+  border-radius: 10px;
 }
 
 .popup-list{
@@ -254,7 +256,38 @@ h1{
 .order-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 5px 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid #dddbdb;
+  font-size: .9rem;
+
+  .itemImg{
+    width: auto;
+  }
+
+  .itemImg img{
+    width: 70%;
+    border-radius: 3px;
+  }
+
+  .itemData{
+    flex-direction: column;
+    gap: .5rem;
+  }
+
+  .qtdPrice{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .qtdPrice span{
+    color: #555555e0;
+  }
+
+  #at{
+    font-size: .7rem;
+  }
 }
 
 .order-total {
@@ -267,6 +300,14 @@ h1{
 
 .orderPrice{
   list-style-type: none;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  strong{
+    font-size: 1.5rem
+  }
 }
 
 /* mobile device */
