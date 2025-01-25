@@ -94,12 +94,12 @@
       listItem.innerHTML = `
         <p>${product.name}</p>
         <span class='itemData'>
-            <span class='itemContainer'>
-                <span class='itemQtd'>${quantity}x</span>
-                ${product.price.toFixed(2)} 
-                <span class='totalItem'>$${totalPrice}</span>
-            </span>
-            <button class='cancelItem' data-id='${productId}'>x</button>
+          <span class='itemContainer'>
+              <span class='itemQtd'>${quantity}x</span>
+              ${product.price.toFixed(2)} 
+              <span class='totalItem'>$${totalPrice}</span>
+          </span>
+          <button class='cancelItem' data-id='${productId}'>x</button>
         </span>
       `;
       listItem.querySelector(".cancelItem").addEventListener("click", () => {
@@ -152,7 +152,20 @@
     
     createPopUp() {
       const popupContainer = document.querySelector(".orderBanner");
-      let orderDetails = [];
+     
+      const orderDetails = Object.entries(this.counter).map(([productId, quantity]) => {
+        const product = this.products.find((p) => p.id == productId);
+        return {
+          image: product.image.thumbnail,
+          name: product.name,
+          quantity: quantity,
+          price: product.price,
+          totalPrice: (quantity * product.price).toFixed(2)
+        };
+      });
+
+      const totalPrice = orderDetails.reduce((total, item) => total + parseFloat(item.totalPrice), 0).toFixed(2);
+
 
       const popupHTML = `
         <div class="popup-overlay" id="popupOverlay">
@@ -168,20 +181,26 @@
               ${orderDetails.map((item) =>
                 `
                   <li class="order-item">
-                    <span>${item.name}</span>
-                    <span>${item.quantity}x @ $${item.price.toFixed(2)}</span>
-                    <span>$${(item.quantity * item.price).toFixed(2)}</span>
+                    <span class='itemImg'>
+                      <img src='${item.image}' />
+                    </span>
+                      <span class='itemData'>
+                        <strong>${item.name}</strong>
+                        <span class='qtdPrice'>
+                          <strong class='itemQtd'>${item.quantity}x</strong>
+                          <span><span id='at'>@</span>$${item.price.toFixed(2)}</span>
+                        </span>
+                      </span>
+                      <strong>$${totalPrice}</strong>
                   </li>
                 `
               ).join("")}
               <li class='orderPrice'>
-                <strong>$${orderDetails.reduce((total, item) =>
-                  total + item.quantity * item.price, 0).toFixed(2)}
-                </strong>
+                <span>Order Total</span><strong>$${totalPrice}</strong>
               </li>
-              <div class="order-total">
-                <button class='submit'>Start New Order</button>
-              </div>
+            </div>
+            <div class="order-total">
+              <button class='submit newOrder'>Start New Order</button>
             </div>
           </div>
         </div>
@@ -189,8 +208,9 @@
 
       popupContainer.innerHTML = popupHTML;
 
-      document.getElementById("popupOverlay").addEventListener('click', function (e) {
-        if (e.target === this) popupContainer.innerHTML = ""
+      document.querySelector(".newOrder").addEventListener('click', function (e) {
+        if (e.target === this) popupContainer.innerHTML = "";
+        
       })
     }
 
