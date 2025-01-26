@@ -28,7 +28,9 @@
           throw new Error(`Error: ${res.statusText}`);
         }
         this.products = await res.json();
-        return {localData, productionData}
+        
+        return { localData, productionData };
+
       } catch (error) {
         document.querySelector(".emptyCart").textContent = `Error loading data: ${error.message}`;
       }
