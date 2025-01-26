@@ -18,7 +18,7 @@
     getJsonUrl() {
       const hostname = window.location.hostname;
 
-      if (hostname === "http://127.0.0.1:5500") {
+      if (hostname === "127.0.0.1") {
         return "http://127.0.0.1:5500/data/data.json";
       } else {
         return "https://little-sweet-corner.netlify.app/data/data.json";
@@ -101,15 +101,15 @@
       const totalPrice = (product.price * quantity).toFixed(2);
 
       listItem.innerHTML = `
-        <p>${product.name}</p>
         <span class='itemData'>
+          <p>${product.name}</p>
           <span class='itemContainer'>
-              <span class='itemQtd'>${quantity}x</span>
-              ${product.price.toFixed(2)} 
-              <span class='totalItem'>$${totalPrice}</span>
+            <span class='itemQtd'>${quantity}x</span>
+            ${product.price.toFixed(2)} 
+            <span class='totalItem'>$${totalPrice}</span>
           </span>
-          <button class='cancelItem' data-id='${productId}'>x</button>
         </span>
+        <span class='cancelItem' src='assets/images/icon-remove-item.svg' data-id='${productId}'>x</span>
       `;
       listItem.querySelector(".cancelItem").addEventListener("click", () => {
         this.removeCartItem(productId)
@@ -123,8 +123,10 @@
       }, 0).toFixed(2);
 
       this.totalDiv.innerHTML = `
-        <p class='orderText'>Total order<span class='amount'>$${totalOrder}</span></p>
-        <button type="submit" class='submit'>Confirm order</button>
+        <div class='order'>
+          <p class='orderText'>Total order<span class='amount'>$${totalOrder}</span></p>
+          <button type="submit" class='submit'>Confirm order</button>
+        </div>
       `;
       this.totalDiv.style.display = "block";
       const submitButton = this.totalDiv.querySelector(".submit");
@@ -155,8 +157,6 @@
       this.totalDiv.style.display = "none";
       document.querySelector(".payTitle").innerHTML = "Your Cart (0)";
       this.showEmptyCartMessage();
-
-      // setTimeout(() => {window.location.reload()}, 500);
     }
     
     createPopUp() {
@@ -218,8 +218,10 @@
       popupContainer.innerHTML = popupHTML;
 
       document.querySelector(".newOrder").addEventListener('click', function (e) {
-        if (e.target === this) popupContainer.innerHTML = "";
-        
+        if (e.target === this) { 
+          popupContainer.innerHTML = "";
+          setTimeout(() => {window.location.reload()}, 500);
+        }
       })
     }
 
