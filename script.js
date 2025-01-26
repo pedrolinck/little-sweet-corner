@@ -15,22 +15,24 @@
       this.setupEventListeners();
     }
 
+    getJsonUrl() {
+      const hostname = window.location.hostname;
+
+      if (hostname === "http://127.0.0.1:5500") {
+        return "http://127.0.0.1:5500/data/data.json";
+      } else {
+        return "https://little-sweet-corner.netlify.app/data/data.json";
+      }
+    }
+
     async loadProducts() {
-      const productionURL = "https://little-sweet-corner.netlify.app/data/data.json";
-      const localURL = "http://127.0.0.1:5500/data/data.json";
-
+      const jsonURL = this.getJsonUrl();
       try {
-        const [localData, productionData] = await Promise.all([
-          fetch(localURL).then((res) => res.json()),
-          fetch(productionURL).then((res) => res.json())
-        ]);
-        if (!res.ok) {
-          throw new Error(`Error: ${res.statusText}`);
+        const response = await fetch(jsonURL);
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
         }
-        this.products = await res.json();
-        
-        return { localData, productionData };
-
+        this.products = await response.json();
       } catch (error) {
         document.querySelector(".emptyCart").textContent = `Error loading data: ${error.message}`;
       }
