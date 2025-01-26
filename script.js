@@ -24,10 +24,10 @@
           fetch(localURL).then((res) => res.json()),
           fetch(productionURL).then((res) => res.json())
         ]);
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
         }
-        this.products = await response.json();
+        this.products = await res.json();
         return {localData, productionData}
       } catch (error) {
         document.querySelector(".emptyCart").textContent = `Error loading data: ${error.message}`;
