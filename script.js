@@ -16,14 +16,19 @@
     }
 
     async loadProducts() {
-      const URL = "http://127.0.0.1:5500/data/data.json";
+      const productionURL = "https://little-sweet-corner.netlify.app/data/data.json";
+      const localURL = "http://127.0.0.1:5500/data/data.json";
 
       try {
-        const response = await fetch(URL);
+        const [localData, productionData] = await Promise.all([
+          fetch(localURL).then((res) => res.json()),
+          fetch(productionURL).then((res) => res.json())
+        ]);
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         this.products = await response.json();
+        return {localData, productionData}
       } catch (error) {
         document.querySelector(".emptyCart").textContent = `Error loading data: ${error.message}`;
       }
