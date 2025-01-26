@@ -5,6 +5,9 @@ import { fileURLToPath } from 'url';
 
 // create server
 const server = createServer((req, res) => {
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+
   if (req.url === '/data' && req.method === 'GET') {
     try {
       const __filename = fileURLToPath(import.meta.url);
