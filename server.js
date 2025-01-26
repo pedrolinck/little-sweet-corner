@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 // create server
 const server = createServer((req, res) => {
-  if (req.url === '/data.json' && req.method === 'GET') {
+  if (req.url === '/data' && req.method === 'GET') {
     try {
       const __filename = fileURLToPath(import.meta.url);
       const __dirname = path.dirname(__filename);
