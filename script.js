@@ -40,9 +40,18 @@
 
     setupEventListeners() {
       const buttons = document.querySelectorAll(".buttonCard");
-      buttons.forEach((button) => {
+      const images = document.querySelectorAll(".imgCard");
+      console.log(images);
+      
+      buttons.forEach((button, index) => {
         button.addEventListener("click", (event) => {
           this.handleAddToCart(event);
+          images[index].style.border = "2px solid #cc3e13"
+          button.style.background = "#cc3e13"
+          button.style.border = "none";
+          button.innerHTML = `
+            
+          `
         });
       });
     }
